@@ -71,9 +71,9 @@ async function callback(req: Request, res: Response) {
 
     const raw = await getRawBody(req);
     const tokenStr = raw.toString().trim();
-    console.log(tokenStr);
 
-    const ethURL = process.env.VERIFIER_BACKEN_AMOY_RPC;
+
+    const ethURL = process.env.VERIFIER_BACKEND_AMOY_RPC;
     const contractAddress = "0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124";
     const keyDIR = "../keys";
 
