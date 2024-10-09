@@ -3,6 +3,7 @@ import { auth, resolver, protocol } from '@iden3/js-iden3-auth';
 import getRawBody from 'raw-body';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 
 const app: Express = express();
 const port = process.env.VERIFIER_BACKEND_PORT;
@@ -21,8 +22,8 @@ app.listen(port, () => {
     console.log(`server running on port ${port}`);
 });
 
-
 const requestMap = new Map();
+const shortUrlMap = new Map<string, any>();
 
 async function getAuthRequest(req: Request, res: Response) {
     const hostUrl = process.env.VERIFIER_BACKEND_HOST;
@@ -57,13 +58,23 @@ async function getAuthRequest(req: Request, res: Response) {
         }
     };
 
-
     const scope = request.body.scope ?? [];
     request.body.scope = [...scope, proofRequest];
 
     requestMap.set(sessionId, request);
 
-    return res.status(200).set("Content-Type", "application/json").send(request);
+    const base64Message = btoa(JSON.stringify(request));
+
+    const shortId = crypto.randomBytes(8).toString('hex');
+    const shortenedUrl = `${hostUrl}/requestjson/${shortId}`;
+    shortUrlMap.set(shortId, request);
+
+    const response = {
+        request: request,
+        encodedURI: `iden3comm://?i_m=${base64Message}`,
+        shortenURL: `iden3comm://?request_uri=${shortenedUrl}`
+    }
+    return res.status(200).set("Content-Type", "application/json").send(response);
 }
 
 async function callback(req: Request, res: Response) {
@@ -71,7 +82,6 @@ async function callback(req: Request, res: Response) {
 
     const raw = await getRawBody(req);
     const tokenStr = raw.toString().trim();
-
 
     const ethURL = process.env.VERIFIER_BACKEND_AMOY_RPC;
     const contractAddress = "0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124";
@@ -105,4 +115,15 @@ async function callback(req: Request, res: Response) {
         return res.status(500).send(error);
     }
 }
+
+app.get("requestjson/:shortId", (req, res) => {
+    const shortId = req.params.shortId;
+    const request = shortUrlMap.get(shortId);
+
+    if (request) {
+        res.json(request);
+    } else {
+        res.status(404).send("Short URL not found");
+    }
+});
 

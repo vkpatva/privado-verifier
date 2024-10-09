@@ -69,43 +69,37 @@ curl --location 'http://localhost:3000/api/sign-in' \
 --data ''
 ```
 
-9. You should receive a sample response with a `sessionId`, `callbackUrl`, and a presentation request JSON object. For example:
+9. You should receive a sample response containing three options for presenting the request:
+   - `request`: A JSON object with the full request details
+   - `encodedURI`: An encoded version of the request
+   - `shortenURL`: A shortened URL for the request
+
+For example:
 
 ```json
 {
-    "id": "a79144a6-4051-4b46-b041-e27d8535d89b",
-    "thid": "ae34d348-84af-4329-8987-a74faba2b3fa",
-    "from": "did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT",
-    "typ": "application/iden3comm-plain-json",
-    "type": "https://iden3-communication.io/authorization/1.0/request",
-    "body": {
-        "reason": "test flow",
-        "message": "",
-        "callbackUrl": "https://cdc6-49-36-70-244.ngrok-free.app/api/callback?sessionId=89e464b8-78a1-47e1-860a-b7db9010c7a7",
-        "scope": [
-            {
-                "circuitId": "credentialAtomicQuerySigV2",
-                "id": 1728317222,
-                "query": {
-                    "allowedIssuers": [
-                        "*"
-                    ],
-                    "context": "ipfs://QmdH1Vu79p2NcZLFbHxzJnLuUHJiMZnBeT7SNpLaqK7k9X",
-                    "type": "POAP01",
-                    "credentialSubject": {
-                        "city": {
-                            "$eq": "mum"
-                        }
-                    }
-                }
-            }
-        ]
-    }
+    "request": {
+        "id": "1bd5a48d-13fb-4d33-9350-48bf4b233e9a",
+        "thid": "9602a13e-89a0-4ee5-8d23-1de4c5c04cf6",
+        "from": "did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT",
+        "typ": "application/iden3comm-plain-json",
+        "type": "https://iden3-communication.io/authorization/1.0/request",
+        "body": {
+            // ... request body ...
+        }
+    },
+    "encodedURI": "iden3comm://?i_m=eyJpZCI6IjFiZDVhNDhkLTEzZmItNGQzMy05MzUwLTQ4YmY0YjIzM2U5YSIsInRoaWQiOiI5NjAyYTEzZS04OWEwLTRlZTUtOGQyMy0xZGU0YzVjMDRjZjYiLCJmcm9tIjoiZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFIN1RzdHBSUkpIWE5ONG80OUZ1OUgyUWlzbWt1OGhRZVV4RFZyanFUIiwidHlwIjoiYXBwbGljYXRpb24vaWRlbjNjb21tLXBsYWluLWpzb24iLCJ0eXBlIjoiaHR0cHM6Ly9pZGVuMy1jb21tdW5pY2F0aW9uLmlvL2F1dGhvcml6YXRpb24vMS4wL3JlcXVlc3QiLCJib2R5Ijp7InJlYXNvbiI6InRlc3QgZmxvdyIsIm1lc3NhZ2UiOiIiLCJjYWxsYmFja1VybCI6Imh0dHBzOi8vY2RjNi00OS0zNi03MC0yNDQubmdyb2stZnJlZS5hcHAvYXBpL2NhbGxiYWNrP3Nlc3Npb25JZD05Y2NlYzE4Ni02ODg0LTQ4YTMtOGFkNi0zOTk0MWVmNjMwMGQiLCJzY29wZSI6W3siY2lyY3VpdElkIjoiY3JlZGVudGlhbEF0b21pY1F1ZXJ5U2lnVjIiLCJpZCI6MTcyODQ5MDA2NTc0NCwicXVlcnkiOnsiYWxsb3dlZElzc3VlcnMiOlsiKiJdLCJjb250ZXh0IjoiaXBmczovL1FtZEgxVnU3OXAyTmNaTEZiSHh6Sm5MdVVISmlNWm5CZVQ3U05wTGFxSzdrOVgiLCJ0eXBlIjoiUE9BUDAxIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiY2l0eSI6eyIkZXEiOiJtdW0ifX19fV19fQ==",
+    "shortenURL": "iden3comm://?request_uri=https://cdc6-49-36-70-244.ngrok-free.app/r/0e560b692fbf3263"
 }
 ```
 
-10. Use the presentation request JSON object to fullfill a presentation request using the Polygon ID mobile wallet:
-    - Generate a QR code for the JSON using any QR code generator
-    - Scan the QR code using the Polygon ID mobile wallet
+10. Choose one of the three options to present the request to the user:
+    - If using the `request` JSON object, generate a QR code from the JSON.
+    - If using the `encodedURI`, generate a QR code directly from this string.
+    - If using the `shortenURL` (recommended), generate a QR code from this URL.
 
-11. After the wallet has been authorized, it will redirect to the callback URL with a presentation response JSON object. The `callback` function in `index.ts` will verify the presentation response.
+    It is advisable to use the `shortenURL` option as the data can be bulky in the encoded and full request formats.
+
+11. Scan the QR code using the Polygon ID mobile wallet to fulfill the presentation request.
+
+12. After the wallet has successfully fetched and sent the proof to the callback URL with a presentation response JSON object, the `callback` function in `index.ts` will verify the presentation response.
