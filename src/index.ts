@@ -41,22 +41,97 @@ async function getAuthRequest(req: Request, res: Response) {
     request.id = requestId;
     request.thid = requestThid;
 
+    // const proofRequest = {
+    //     "circuitId": "credentialAtomicQuerySigV2",
+    //     "id": Date.now(),
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmdH1Vu79p2NcZLFbHxzJnLuUHJiMZnBeT7SNpLaqK7k9X",
+    //         "type": "POAP01",
+    //         "credentialSubject": {
+    //             "city": {
+    //                 "$eq": "mum"
+    //             }
+    //         }
+    //     }
+    // };
+
     const proofRequest = {
-        "circuitId": "credentialAtomicQuerySigV2",
+        "circuitId": "credentialAtomicQueryV3-beta.1",
         "id": Date.now(),
         "query": {
             "allowedIssuers": [
                 "*"
             ],
-            "context": "ipfs://QmdH1Vu79p2NcZLFbHxzJnLuUHJiMZnBeT7SNpLaqK7k9X",
-            "type": "POAP01",
+            "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+            "type": "DriversLicense",
             "credentialSubject": {
-                "city": {
-                    "$eq": "mum"
-                }
+                "ClassA": {}
             }
         }
-    };
+    }
+
+    // const proofRequest2 = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
+    //     "id": Date.now(),
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+    //         "type": "DriversLicense",
+    //         "credentialSubject": {
+    //             'ClassB': {}
+    //         }
+    //     }
+    // }
+    // const newScope = {
+    //     "id": "f8aee09d-f592-4fcc-8d2a-8938aa26676c",
+    //     "thid": "f8aee09d-f592-4fcc-8d2a-8938aa26676c",
+    //     "from": "did:polygonid:polygon:amoy:2qFroxB5kwgCxgVrNGUM6EW3khJgCdHHnKTr3VnTcp",
+    //     "typ": "application/iden3comm-plain-json",
+    //     "type": "https://iden3-communication.io/authorization/1.1/request",
+    //     "body": {
+    //         "callbackUrl": "https://test.com/callback",
+    //         "reason": "age verification",
+    //         "message": "test message",
+    //         "scope": [
+    //             {
+    //                 "id": 1,
+    //                 "circuitId": "credentialAtomicQueryV3-beta.1",
+    //                 "query": {
+    //                     "groupId": 1,
+    //                     "proofType": "BJJSignature",
+    //                     "allowedIssuers": ["*"],
+    //                     "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v101.json-ld",
+    //                     "type": "KYCEmployee",
+    //                     "credentialSubject": {
+    //                         "position": {
+    //                             "$eq": "developer"
+    //                         }
+    //                     }
+    //                 }
+    //             },
+    //             {
+    //                 "id": 2,
+    //                 "circuitId": "credentialAtomicQueryV3-beta.1",
+    //                 "query": {
+    //                     "allowedIssuers": ["*"],
+    //                     "groupId": 1,
+    //                     "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v101.json-ld",
+    //                     "type": "KYCEmployee",
+    //                     "credentialSubject": {
+    //                         "documentType": {
+    //                             "$in": [1, 2]
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         ]
+    //     }
+    // }
 
     const scope = request.body.scope ?? [];
     request.body.scope = [...scope, proofRequest];
@@ -116,7 +191,7 @@ async function callback(req: Request, res: Response) {
     }
 }
 
-app.get("requestjson/:shortId", (req, res) => {
+app.get("/requestjson/:shortId", (req, res) => {
     const shortId = req.params.shortId;
     const request = shortUrlMap.get(shortId);
 
