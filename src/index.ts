@@ -67,74 +67,94 @@ async function getAuthRequest(req: Request, res: Response) {
             ],
             "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
             "type": "DriversLicense",
+            "groupId": 1,
             "credentialSubject": {
                 "ClassA": {}
             }
         }
     }
+    const proofRequest2 = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": Date.now() + 1,
+        "query": {
+            "allowedIssuers": [
+                "*"
+            ],
+            "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+            "type": "DriversLicense",
+            "groupId": 1,
+            "credentialSubject": {
+                "ClassB": {}
+            }
+        }
+    }
+    const proofRequest3 = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": Date.now() + 3,
+        "query": {
+            "allowedIssuers": [
+                "*"
+            ],
+            "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+            "type": "DriversLicense",
+            "groupId": 1,
+            "credentialSubject": {
+                "ClassC": {}
+            }
+        }
+    }
 
-    // const proofRequest2 = {
-    //     "circuitId": "credentialAtomicQueryV3-beta.1",
-    //     "id": Date.now(),
-    //     "query": {
-    //         "allowedIssuers": [
-    //             "*"
-    //         ],
-    //         "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
-    //         "type": "DriversLicense",
-    //         "credentialSubject": {
-    //             'ClassB': {}
-    //         }
-    //     }
-    // }
-    // const newScope = {
-    //     "id": "f8aee09d-f592-4fcc-8d2a-8938aa26676c",
-    //     "thid": "f8aee09d-f592-4fcc-8d2a-8938aa26676c",
-    //     "from": "did:polygonid:polygon:amoy:2qFroxB5kwgCxgVrNGUM6EW3khJgCdHHnKTr3VnTcp",
-    //     "typ": "application/iden3comm-plain-json",
-    //     "type": "https://iden3-communication.io/authorization/1.1/request",
-    //     "body": {
-    //         "callbackUrl": "https://test.com/callback",
-    //         "reason": "age verification",
-    //         "message": "test message",
-    //         "scope": [
-    //             {
-    //                 "id": 1,
-    //                 "circuitId": "credentialAtomicQueryV3-beta.1",
-    //                 "query": {
-    //                     "groupId": 1,
-    //                     "proofType": "BJJSignature",
-    //                     "allowedIssuers": ["*"],
-    //                     "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v101.json-ld",
-    //                     "type": "KYCEmployee",
-    //                     "credentialSubject": {
-    //                         "position": {
-    //                             "$eq": "developer"
-    //                         }
-    //                     }
-    //                 }
-    //             },
-    //             {
-    //                 "id": 2,
-    //                 "circuitId": "credentialAtomicQueryV3-beta.1",
-    //                 "query": {
-    //                     "allowedIssuers": ["*"],
-    //                     "groupId": 1,
-    //                     "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v101.json-ld",
-    //                     "type": "KYCEmployee",
-    //                     "credentialSubject": {
-    //                         "documentType": {
-    //                             "$in": [1, 2]
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         ]
-    //     }
-    // }
+    //ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg
+    const proofRequest4 = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": Date.now() + 4,
+        "query": {
+            "allowedIssuers": [
+                "*"
+            ],
+            "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
+            "type": "EmployeeID",
+            "groupId": 2,
+            "credentialSubject": {
+                "Department": {}
+            }
+        }
+    }
+
+    const proofRequest5 = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": Date.now() + 5,
+        "query": {
+            "allowedIssuers": [
+                "*"
+            ],
+            "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
+            "type": "EmployeeID",
+            "groupId": 2,
+            "credentialSubject": {
+                "EmployeeName": {}
+            }
+        }
+    }
+
+    const proofRequest6 = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": Date.now() + 6,
+        "query": {
+            "allowedIssuers": [
+                "*"
+            ],
+            "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
+            "type": "EmployeeID",
+            "groupId": 2,
+            "credentialSubject": {
+                "DateOfJoining": {}
+            }
+        }
+    }
 
     const scope = request.body.scope ?? [];
-    request.body.scope = [...scope, proofRequest];
+    request.body.scope = [...scope, proofRequest, proofRequest2, proofRequest3, proofRequest4, proofRequest5, proofRequest6];
 
     requestMap.set(sessionId, request);
 
@@ -157,7 +177,11 @@ async function callback(req: Request, res: Response) {
 
     const raw = await getRawBody(req);
     const tokenStr = raw.toString().trim();
-
+    console.log(tokenStr)
+    // return res
+    //     .status(200)
+    //     .set("Content-Type", "application/json")
+    //     .send("Your proof is being verified");
     const ethURL = process.env.VERIFIER_BACKEND_AMOY_RPC;
     const contractAddress = "0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124";
     const keyDIR = "../keys";
