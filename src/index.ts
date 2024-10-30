@@ -41,120 +41,150 @@ async function getAuthRequest(req: Request, res: Response) {
     request.id = requestId;
     request.thid = requestThid;
 
+    const proofRequest = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": 1729919256,
+        "query": {
+            "allowedIssuers": [
+                "did:iden3:polygon:amoy:xC3kP1H11c5EpKrmHXXKSEmkaeim3anmEq8nxcwMd"
+            ],
+            "context": "ipfs://QmQczoKBExhGTnrL1kHeBum3jx9pg4bn6RL6YebwdeuraG",
+            "type": "POH",
+            "groupId": 1,
+            "credentialSubject": {
+                "verification_type": {}
+            }
+        }
+    }
     // const proofRequest = {
     //     "circuitId": "credentialAtomicQuerySigV2",
+    //     "id": 1729921413,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "did:iden3:polygon:amoy:xC3kP1H11c5EpKrmHXXKSEmkaeim3anmEq8nxcwMd"
+    //         ],
+    //         "context": "ipfs://QmQczoKBExhGTnrL1kHeBum3jx9pg4bn6RL6YebwdeuraG",
+    //         "type": "POH",
+    //         "credentialSubject": {
+    //             "verification_type": {}
+    //         }
+    //     }
+    // }
+    const proofRequest2 = {
+        "circuitId": "credentialAtomicQueryV3-beta.1",
+        "id": 1729919257,
+        "query": {
+            "allowedIssuers": [
+                "did:iden3:polygon:amoy:xC3kP1H11c5EpKrmHXXKSEmkaeim3anmEq8nxcwMd"
+            ],
+            "context": "ipfs://QmQczoKBExhGTnrL1kHeBum3jx9pg4bn6RL6YebwdeuraG",
+            "type": "POH",
+            "groupId": 1,
+            "credentialSubject": {
+                "verification_level": {}
+            }
+        }
+    }
+
+
+
+    // const proofRequest = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
     //     "id": Date.now(),
     //     "query": {
     //         "allowedIssuers": [
     //             "*"
     //         ],
-    //         "context": "ipfs://QmdH1Vu79p2NcZLFbHxzJnLuUHJiMZnBeT7SNpLaqK7k9X",
-    //         "type": "POAP01",
+    //         "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+    //         "type": "DriversLicense",
+    //         "groupId": 1,
     //         "credentialSubject": {
-    //             "city": {
-    //                 "$eq": "mum"
-    //             }
+    //             "ClassA": {}
     //         }
     //     }
-    // };
+    // }
+    // const proofRequest2 = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
+    //     "id": Date.now() + 1,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+    //         "type": "DriversLicense",
+    //         "groupId": 1,
+    //         "credentialSubject": {
+    //             "ClassB": {}
+    //         }
+    //     }
+    // }
+    // const proofRequest3 = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
+    //     "id": Date.now() + 3,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
+    //         "type": "DriversLicense",
+    //         "groupId": 1,
+    //         "credentialSubject": {
+    //             "ClassC": {}
+    //         }
+    //     }
+    // }
 
-    const proofRequest = {
-        "circuitId": "credentialAtomicQueryV3-beta.1",
-        "id": Date.now(),
-        "query": {
-            "allowedIssuers": [
-                "*"
-            ],
-            "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
-            "type": "DriversLicense",
-            "groupId": 1,
-            "credentialSubject": {
-                "ClassA": {}
-            }
-        }
-    }
-    const proofRequest2 = {
-        "circuitId": "credentialAtomicQueryV3-beta.1",
-        "id": Date.now() + 1,
-        "query": {
-            "allowedIssuers": [
-                "*"
-            ],
-            "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
-            "type": "DriversLicense",
-            "groupId": 1,
-            "credentialSubject": {
-                "ClassB": {}
-            }
-        }
-    }
-    const proofRequest3 = {
-        "circuitId": "credentialAtomicQueryV3-beta.1",
-        "id": Date.now() + 3,
-        "query": {
-            "allowedIssuers": [
-                "*"
-            ],
-            "context": "ipfs://QmNf693mitVCKjMjdnCJFAZwhztUHupX94ggkHS9ykpD3W",
-            "type": "DriversLicense",
-            "groupId": 1,
-            "credentialSubject": {
-                "ClassC": {}
-            }
-        }
-    }
+    // //ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg
+    // const proofRequest4 = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
+    //     "id": Date.now() + 4,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
+    //         "type": "EmployeeID",
+    //         "groupId": 2,
+    //         "credentialSubject": {
+    //             "Department": {}
+    //         }
+    //     }
+    // }
 
-    //ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg
-    const proofRequest4 = {
-        "circuitId": "credentialAtomicQueryV3-beta.1",
-        "id": Date.now() + 4,
-        "query": {
-            "allowedIssuers": [
-                "*"
-            ],
-            "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
-            "type": "EmployeeID",
-            "groupId": 2,
-            "credentialSubject": {
-                "Department": {}
-            }
-        }
-    }
+    // const proofRequest5 = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
+    //     "id": Date.now() + 5,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
+    //         "type": "EmployeeID",
+    //         "groupId": 2,
+    //         "credentialSubject": {
+    //             "EmployeeName": {}
+    //         }
+    //     }
+    // }
 
-    const proofRequest5 = {
-        "circuitId": "credentialAtomicQueryV3-beta.1",
-        "id": Date.now() + 5,
-        "query": {
-            "allowedIssuers": [
-                "*"
-            ],
-            "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
-            "type": "EmployeeID",
-            "groupId": 2,
-            "credentialSubject": {
-                "EmployeeName": {}
-            }
-        }
-    }
-
-    const proofRequest6 = {
-        "circuitId": "credentialAtomicQueryV3-beta.1",
-        "id": Date.now() + 6,
-        "query": {
-            "allowedIssuers": [
-                "*"
-            ],
-            "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
-            "type": "EmployeeID",
-            "groupId": 2,
-            "credentialSubject": {
-                "DateOfJoining": {}
-            }
-        }
-    }
+    // const proofRequest6 = {
+    //     "circuitId": "credentialAtomicQueryV3-beta.1",
+    //     "id": Date.now() + 6,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "ipfs://QmdL7nFpWouxsYy2ALj7WWzF9p972yQcieF5akQ4FoUPBg",
+    //         "type": "EmployeeID",
+    //         "groupId": 2,
+    //         "credentialSubject": {
+    //             "DateOfJoining": {}
+    //         }
+    //     }
+    // }
 
     const scope = request.body.scope ?? [];
-    request.body.scope = [...scope, proofRequest, proofRequest2, proofRequest3, proofRequest4, proofRequest5, proofRequest6];
+    request.body.scope = [...scope, proofRequest, proofRequest2];
 
     requestMap.set(sessionId, request);
 
@@ -173,45 +203,72 @@ async function getAuthRequest(req: Request, res: Response) {
 }
 
 async function callback(req: Request, res: Response) {
-    const sessionId = req.query.sessionId;
-
-    const raw = await getRawBody(req);
-    const tokenStr = raw.toString().trim();
-    console.log(tokenStr)
-    // return res
-    //     .status(200)
-    //     .set("Content-Type", "application/json")
-    //     .send("Your proof is being verified");
-    const ethURL = process.env.VERIFIER_BACKEND_AMOY_RPC;
-    const contractAddress = "0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124";
-    const keyDIR = "../keys";
-
-    const ethStateResolver = new resolver.EthStateResolver(
-        ethURL as string,
-        contractAddress
-    );
-
-    const resolvers = {
-        ["polygon:amoy"]: ethStateResolver,
-    };
-    const authRequest = requestMap.get(`${sessionId}`);
-
-    const verifier = await auth.Verifier.newVerifier({
-        stateResolver: resolvers,
-        circuitsDir: path.join(__dirname, keyDIR),
-        ipfsGatewayURL: "https://ipfs.io",
-    });
     try {
-        const opts = {
-            acceptedStateTransitionDelay: 5 * 60 * 1000, // 5 minute
+
+        const sessionId = req.query.sessionId;
+
+        const raw = await getRawBody(req);
+        const tokenStr = raw.toString().trim();
+        console.log(tokenStr)
+        // return res
+        //     .status(200)
+        //     .set("Content-Type", "application/json")
+        //     .send("Your proof is being verified");
+        // const ethURL = "https://rpc-mainnet.privado.id";
+        const ethURL = process.env.VERIFIER_BACKEND_AMOY_RPC;
+        const contractAddress = "0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124";
+        // const contractAddress = '0x3C9acB2205Aa72A05F6D77d708b5Cf85FCa3a896'
+        const keyDIR = "../keys";
+
+        const AMOY_STATE_RESOLVER = new resolver.EthStateResolver(
+            ethURL as string,
+            contractAddress
+        );
+
+        const resolvers = {
+            ["polygon:amoy"]: AMOY_STATE_RESOLVER,
+            ["privado:main"]: new resolver.EthStateResolver(
+                "https://rpc-mainnet.privado.id",
+                "0x975556428F077dB5877Ea2474D783D6C69233742",
+            ),
+            ["privado:test"]: new resolver.EthStateResolver(
+                "https://rpc-testnet.privado.id/",
+                "0x975556428F077dB5877Ea2474D783D6C69233742",
+            ),
         };
-        const authResponse = await verifier.fullVerify(tokenStr, authRequest, opts);
-        return res
-            .status(200)
-            .set("Content-Type", "application/json")
-            .send(authResponse);
-    } catch (error) {
-        return res.status(500).send(error);
+        const authRequest = requestMap.get(`${sessionId}`);
+
+        const verifier = await auth.Verifier.newVerifier({
+            stateResolver: resolvers,
+            circuitsDir: path.join(__dirname, keyDIR),
+            ipfsGatewayURL: "https://ipfs.io",
+        });
+
+        console.log('------------before try block--------------------');
+        console.log("resolver: ", resolver, "verifier: ", verifier, "authRequest: ", authRequest)
+        try {
+            const opts = {
+                acceptedStateTransitionDelay: 5 * 60 * 1000, // 5 minute
+            };
+            console.log('------------------------------------------------');
+            console.log('opts : ', opts);
+
+            console.log('------------------------------------------------');
+            const authResponse = await verifier.fullVerify(tokenStr, authRequest, opts);
+            console.log('------------------------------------------------');
+            console.log(authResponse);
+            console.log('------------------------------------------------');
+            return res
+                .status(200)
+                .set("Content-Type", "application/json")
+                .send({});
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    } catch (err) {
+        console.log('inside error block')
+        console.log(err)
+        res.status(500).send({ error: "internal server error" })
     }
 }
 
