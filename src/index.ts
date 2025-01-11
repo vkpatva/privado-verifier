@@ -1,7 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import { auth, resolver, protocol } from '@iden3/js-iden3-auth';
 import getRawBody from 'raw-body';
-import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 
@@ -48,19 +47,84 @@ async function getAuthRequest(req: Request, res: Response) {
     verificationMap.set(verificationId, { status: 'pending' });
     const proofRequest = {
         "circuitId": "credentialAtomicQuerySigV2",
-        "id": 1734928742,
+        "id": 1736569127,
         "query": {
+            "groupId": 1,
             "allowedIssuers": [
                 "*"
             ],
             "context": "https://raw.githubusercontent.com/vkpatva/jsonschema/refs/heads/main/testing-file.json",
             "type": "testingschema",
-            "groupId": 1,
             "credentialSubject": {
-                "attribute.place_of_birth.city": {}
+                "attribute.height": {
+                    "$ne": 1
+                }
             }
         }
     }
+    // const proofRequest2 = {
+    //     "circuitId": "credentialAtomicQuerySigV2",
+    //     "id": 1736569127,
+    //     "query": {
+    //         "groupId": 1,
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "https://raw.githubusercontent.com/vkpatva/jsonschema/refs/heads/main/testing-file.json",
+    //         "type": "testingschema",
+    //         "credentialSubject": {
+    //             "attribute.height": {}
+    //         }
+    //     }
+    // }
+
+    // const proofRequest3 = {
+    //     "circuitId": "credentialAtomicQuerySigV2",
+    //     "id": 1736585732,
+    //     "query": {
+    //         "groupId": 2,
+    //       "allowedIssuers": [
+    //         "*"
+    //       ],
+    //       "context": "https://raw.githubusercontent.com/vkpatva/jsonschema/refs/heads/main/result-json-ld.json",
+    //       "type": "Result",
+    //       "credentialSubject": {
+    //         "marks.IT443.practical": {}
+    //       }
+    //     }
+    //   }
+      const proofRequest4 = {
+        "circuitId": "credentialAtomicQuerySigV2",
+        "id": 1736585732,
+        "query": {
+            "groupId": 2,
+          "allowedIssuers": [
+            "*"
+          ],
+          "context": "https://raw.githubusercontent.com/vkpatva/jsonschema/refs/heads/main/result-json-ld.json",
+          "type": "Result",
+          "credentialSubject": {
+            "marks.IT443.theory": {
+                "$ne": 1
+            }
+          }
+        }
+      }
+    // const proofRequest = {
+    //     "circuitId": "credentialAtomicQuerySigV2",
+    //     "id": 1734928742,
+    //     "query": {
+    //         "allowedIssuers": [
+    //             "*"
+    //         ],
+    //         "context": "https://raw.githubusercontent.com/vkpatva/jsonschema/refs/heads/main/testing-file.json",
+    //         "type": "testingschema",
+    //         "groupId": 1,
+    //         "credentialSubject": {
+    //             "attribute.place_of_birth.city": {}
+    //         }
+    //     }
+    // }
 
     // const proofRequest2 = {
     //     "circuitId": "credentialAtomicQuerySigV2",
@@ -79,7 +143,7 @@ async function getAuthRequest(req: Request, res: Response) {
     // }
 
     const scope = request.body.scope ?? [];
-    request.body.scope = [...scope, proofRequest];
+    request.body.scope = [...scope, proofRequest, proofRequest4];
 
     requestMap.set(sessionId, { ...request, verificationId: verificationId });
 
